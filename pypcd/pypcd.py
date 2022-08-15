@@ -28,7 +28,7 @@ __all__ = ['PointCloud',
            'point_cloud_to_buffer',
            'point_cloud_to_fileobj',
            'point_cloud_from_path',
-           'pandas_to_pypc',
+           'pandas_to_pypcd',
            'point_cloud_from_buffer',
            'point_cloud_from_fileobj',
            'make_xyz_point_cloud',
@@ -295,7 +295,7 @@ def point_cloud_from_path(fname):
         pc = point_cloud_from_fileobj(f)
     return pc
 
-def pandas_to_pypc(df):
+def pandas_to_pypcd(df):
     """ Convert pandas dataframe to a pypcd point cloud
     :param df: input dataframe with desired columns. Datatypes and column names will be converted directly
     """
