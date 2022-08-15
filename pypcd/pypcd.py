@@ -13,6 +13,7 @@ import copy
 from io import StringIO as sio
 import numpy as np
 import warnings
+import pandas as pd
 import lzf
 
 HAS_SENSOR_MSGS = True
@@ -27,6 +28,7 @@ __all__ = ['PointCloud',
            'point_cloud_to_buffer',
            'point_cloud_to_fileobj',
            'point_cloud_from_path',
+           'pandas_to_pypc',
            'point_cloud_from_buffer',
            'point_cloud_from_fileobj',
            'make_xyz_point_cloud',
@@ -292,6 +294,28 @@ def point_cloud_from_path(fname):
     with open(fname, 'rb') as f:
         pc = point_cloud_from_fileobj(f)
     return pc
+
+def pandas_to_pypc(df):
+    """ Convert pandas dataframe to a pypcd point cloud
+    :param df: input dataframe with desired columns. Datatypes and column names will be converted directly
+    """
+    pc_data = df.to_records(index=False)
+    md = { 'version':.7,
+        'fields': [], 'size': [], 'count': [],
+        'width': 0, 'height':1,
+        'viewpoint':[0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
+        'points': 0, 'type': [], 'data':'binary_compressed'
+    }
+    md['fields'] = df.columns.tolist()
+    for field in md['fields']:
+        type_, size_ = numpy_type_to_pcd_type[ pc_data.dtype.fields[field][0] ]
+        md['type'].append( type_ )
+        md['size'].append( size_ )
+        md['count'].append( 1 )
+    md['width'] = len(pc_data)
+    md['points'] = len(pc_data)
+
+    return PointCloud(md, pc_data)
 
 
 def point_cloud_from_buffer(buf):
