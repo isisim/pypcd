@@ -79,11 +79,19 @@ def parse_header(lines):
     for ln in lines:
         if ln.startswith('#') or len(ln) < 2:
             continue
-        match = re.match('(\w+)\s+([\w\s\.]+)', ln)
-        if not match:
+
+        values = ln.split()
+
+        # First word is the key
+        key = values[0].lower()
+
+        # Remaining words, space delimited, are the values
+        value = " ".join(values[1:])
+
+        if len(values) < 2:
             warnings.warn("warning: can't understand line: %s" % ln)
             continue
-        key, value = match.group(1).lower(), match.group(2)
+
         if key == 'version':
             metadata[key] = value
         elif key in ('fields', 'type'):
