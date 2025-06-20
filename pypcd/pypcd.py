@@ -253,7 +253,7 @@ def parse_binary_pc_data(f, dtype, metadata):
     rowstep = metadata["points"] * dtype.itemsize
     # for some reason pcl adds empty space at the end of files
     buf = f.read(rowstep)
-    return np.fromstring(buf, dtype=dtype)
+    return np.frombuffer(buf, dtype=dtype)
 
 
 def parse_binary_compressed_pc_data(f, dtype, metadata):
@@ -278,7 +278,7 @@ def parse_binary_compressed_pc_data(f, dtype, metadata):
     for dti in range(len(dtype)):
         dt = dtype[dti]
         bytes = dt.itemsize * metadata["width"]
-        column = np.fromstring(buf[ix : (ix + bytes)], dt)
+        column = np.frombuffer(buf[ix : (ix + bytes)], dt)
         pc_data[dtype.names[dti]] = column
         ix += bytes
     return pc_data

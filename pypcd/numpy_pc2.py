@@ -134,14 +134,14 @@ def pointcloud2_to_array(cloud_msg, split_rgb=False, remove_padding=True):
 
     Reshapes the returned array to have shape (height, width), even if the height is 1.
 
-    The reason for using np.fromstring rather than struct.unpack is speed... especially
+    The reason for using np.frombuffer rather than struct.unpack is speed... especially
     for large point clouds, this will be <much> faster.
     """
     # construct a numpy record type equivalent to the point type of this cloud
     dtype_list = pointcloud2_to_dtype(cloud_msg)
 
     # parse the cloud into an array
-    cloud_arr = np.fromstring(cloud_msg.data, dtype_list)
+    cloud_arr = np.frombuffer(cloud_msg.data, dtype_list)
 
     # remove the dummy fields that were added
     if remove_padding:
