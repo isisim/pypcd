@@ -13,15 +13,17 @@ if _version_micro:
 if _version_extra:
     _ver.append(_version_extra)
 
-__version__ = '.'.join(map(str, _ver))
+__version__ = ".".join(map(str, _ver))
 
-CLASSIFIERS = ["Development Status :: 3 - Alpha",
-               "Environment :: Console",
-               "Intended Audience :: Science/Research",
-               "License :: OSI Approved :: MIT License",
-               "Operating System :: OS Independent",
-               "Programming Language :: Python",
-               "Topic :: Scientific/Engineering"]
+CLASSIFIERS = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering",
+]
 
 # Description should be a one-liner:
 description = "Pure Python PCD reader/writer"
@@ -63,7 +65,6 @@ MAJOR = _version_major
 MINOR = _version_minor
 MICRO = _version_micro
 VERSION = __version__
-PACKAGES = ['pypcd',
-            'pypcd.tests']
-PACKAGE_DATA = {'pypcd': [pjoin('data', '*')]}
+PACKAGES = ["pypcd", "pypcd.tests"]
+PACKAGE_DATA = {"pypcd": [pjoin("data", "*")]}
 INSTALL_REQUIRES = ["numpy", "python-lzf", "pandas"]
