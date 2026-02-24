@@ -191,7 +191,7 @@ def _metadata_is_consistent(metadata):
     )
     ok = True
     for check, msg in checks:
-        if not check(metadata):
+        if not check(metadata):string
             print("error:", msg)
             ok = False
     return ok
@@ -369,7 +369,7 @@ def point_cloud_to_fileobj(pc, fileobj, data_compression=None):
         fmtstr = build_ascii_fmtstr(pc)
         np.savetxt(fileobj, pc.pc_data, fmt=fmtstr)
     elif metadata["data"].lower() == "binary":
-        fileobj.write(pc.pc_data.tostring())
+        fileobj.write(pc.pc_data.tobytes())
     elif metadata["data"].lower() == "binary_compressed":
         # TODO
         # a '_' field is ignored by pcl and breakes compressed point clouds.
@@ -378,7 +378,7 @@ def point_cloud_to_fileobj(pc, fileobj, data_compression=None):
         # reorder to column-by-column
         uncompressed_lst = []
         for fieldname in pc.pc_data.dtype.names:
-            column = np.ascontiguousarray(pc.pc_data[fieldname]).tostring()
+            column = np.ascontiguousarray(pc.pc_data[fieldname]).tobytes()
             uncompressed_lst.append(column)
         uncompressed = b"".join(uncompressed_lst)
         uncompressed_size = len(uncompressed)
