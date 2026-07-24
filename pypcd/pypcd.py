@@ -191,7 +191,7 @@ def _metadata_is_consistent(metadata):
     )
     ok = True
     for check, msg in checks:
-        if not check(metadata):string
+        if not check(metadata):
             print("error:", msg)
             ok = False
     return ok
